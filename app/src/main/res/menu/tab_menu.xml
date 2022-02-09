@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+        android:id="@+id/tabMode"
+        android:icon="@drawable/ic_baseline_settings_24"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/tabMode1"
+        android:icon="@drawable/ic_baseline_currency_exchange_24"
+        android:menuCategory="alternative"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/tabMode2"
+        android:icon="@drawable/ic_baseline_view_module_24"
+        app:showAsAction="ifRoom"
+        />
+    <item
+        android:id="@+id/tabMode3"
+        android:icon="@drawable/ic_baseline_location_on_24"
+        app:showAsAction="ifRoom"
+        />
+
+</menu>
