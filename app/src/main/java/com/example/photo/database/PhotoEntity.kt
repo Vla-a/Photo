@@ -1,13 +1,13 @@
 package com.example.photo.database
 
 import androidx.room.Entity
+import androidx.room.PrimaryKey
 
 
-@Entity(tableName = "photo_table",  primaryKeys = ["id", "url"])
+@Entity(tableName = "photo_table")
 class PhotoEntity(
 
-    val id: Long,
-    val url: String,
+    @PrimaryKey val url: String,
     val date: Long,
     val circle: Boolean,
     val baptized: Boolean

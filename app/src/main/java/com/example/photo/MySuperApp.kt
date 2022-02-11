@@ -15,10 +15,8 @@ import org.koin.dsl.module
 @KoinApiExtension
 class MySuperApp : Application(), KoinComponent {
 
-
     override fun onCreate() {
         super.onCreate()
-
 
         startKoin {
             androidContext(this@MySuperApp)
@@ -26,14 +24,12 @@ class MySuperApp : Application(), KoinComponent {
         }
     }
 
-
     private val viewModels = module {
         viewModel { ImageViewModel(get()) }
     }
 
     private val repository = module { //создаем репозитории
         factory { PhotoRepository(get()) }
-
     }
 
     private val storageModule = module {

@@ -2,8 +2,8 @@
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
     android:backgroundTint="@color/whiteBlue"
     android:background="@color/white">
 
@@ -31,14 +31,11 @@
             app:layout_constraintTop_toTopOf="parent" />
     </androidx.cardview.widget.CardView>
 
-
-
-
         <ImageView
             android:id="@+id/image_src"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_margin="16dp"
+            android:layout_margin="12dp"
             android:visibility="invisible"
             android:background="@drawable/radius"
             android:src="@drawable/ic_baseline_panorama_fish_eye_24"
@@ -48,7 +45,7 @@
             android:id="@+id/image_src_c"
             android:layout_width="10dp"
             android:layout_height="10dp"
-            android:layout_margin="21dp"
+            android:layout_margin="17dp"
             android:visibility="invisible"
             android:background="@drawable/ic_baseline_close_24"
             app:layout_constraintEnd_toEndOf="@+id/card_image"

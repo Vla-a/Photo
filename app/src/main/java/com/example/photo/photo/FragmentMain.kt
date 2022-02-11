@@ -6,33 +6,30 @@ import android.content.Intent
 import android.net.Uri
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.core.view.isInvisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photo.R
 import com.example.photo.adapters.PhotoAdapter
 import com.example.photo.data.Photo
 import com.example.photo.databinding.FragmentMainBinding
-import com.example.photo.databinding.ItemPhotoBinding
 import com.example.photo.utilites.Utility
+import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.launch
 import org.koin.android.viewmodel.ext.android.viewModel
-import java.io.ByteArrayOutputStream
-import java.io.InputStream
-import java.util.*
 
-class FragmentMain: Fragment(){
+class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
 
-    private var list: MutableList<Photo> = mutableListOf()
+    private val mutList: MutableList<Photo> = mutableListOf()
     private var binding: FragmentMainBinding? = null
     val imageViewModel: ImageViewModel by viewModel()
-    private var saveList: List<Photo> = mutableListOf()
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -46,22 +43,24 @@ class FragmentMain: Fragment(){
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding?.btnDelete?.bringToFront()
+
         val photoAdapter = PhotoAdapter(
-            characterList = list,
-            clickListener = ::clickListener,
-            longClickListener =::longlickListener
+            longClickListener = ::longlickListener,
+            clickOpen = ::KlickOpen,
+            this
         )
 
         binding!!.largeLabel.setOnClickListener {
 //            Toast.makeText(view?.context, "long click", Toast.LENGTH_SHORT).show()
-          binding!!.tvTex.text = binding!!.editText.text.toString()
+            binding!!.tvTex.text = binding!!.editText.text.toString()
             binding!!.editText.setText(R.string.Street)
         }
 
 
 
         with(binding?.rvPhoto) {
-            this?.layoutManager = context?.let {Utility.calculateNoOfColumns(it, 120f) }?.let {
+            this?.layoutManager = context?.let { Utility.calculateNoOfColumns(it, 120f) }?.let {
                 GridLayoutManager(
                     context,
                     it
@@ -70,44 +69,32 @@ class FragmentMain: Fragment(){
             binding?.rvPhoto?.adapter = photoAdapter
         }
 
-        imageViewModel.photoListLiveData.observe(this.viewLifecycleOwner, { it ->
-            it.forEach { it.url?.let { it1 -> Log.e("RER", it1) } }
-            photoAdapter.update(it)
-             saveList = it;
-        })
+        viewLifecycleOwner.lifecycleScope.launch {
+            imageViewModel.list.collect {
+                photoAdapter.submitList(it)
+            }
+        }
+
 
         binding!!.btnAdd.setOnClickListener {
             openGalleryForImages()
         }
+
         binding!!.btnDelete.setOnClickListener {
             binding!!.btnDelete.visibility = View.INVISIBLE
-            saveList.forEach { item ->
-                imageViewModel.addPhotoToDatabase(Photo(item.id,item.url, item.date, true,true))
+
+            mutList.forEach { photo ->
+                imageViewModel.deletePhoto(photo)
             }
+            mutList.clear()
         }
     }
 
-    private fun clickListener(photo: Photo) {
-
-        this.findNavController().navigate(FragmentMainDirections.toBigPhotoFragment())
-        setFragmentResult(TEST, Bundle().apply {
-            putString(KEY1, photo.url)
-        })
-    }
     private fun longlickListener() {
-        binding!!.btnDelete.visibility = View.VISIBLE
-        saveList.forEach { item ->
-            if(item.baptized){
-            imageViewModel.deletePhoto(item)
-//                imageViewModel.deleteMessage(item)
+        imageViewModel.chengeList()
+        binding!!.btnDelete.isInvisible = !binding!!.btnDelete.isInvisible
 
-            }
-            imageViewModel.addPhotoToDatabase(Photo(item.id,item.url, item.date, false,item.baptized))
-        }
-       binding!!.btnDelete.visibility = View.VISIBLE
-        }
-
-
+    }
 
     private fun openGalleryForImages() {
 
@@ -117,11 +104,9 @@ class FragmentMain: Fragment(){
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.action = Intent.ACTION_GET_CONTENT
             startActivityForResult(
-                Intent.createChooser(intent, "Choose Pictures")
-                , REQUEST_CODE
+                Intent.createChooser(intent, "Choose Pictures"), REQUEST_CODE
             )
-        }
-        else { // For latest versions API LEVEL 19+
+        } else { // For latest versions API LEVEL 19+
             var intent = Intent(Intent.ACTION_OPEN_DOCUMENT)
             intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, true)
             intent.addCategory(Intent.CATEGORY_OPENABLE)
@@ -130,10 +115,11 @@ class FragmentMain: Fragment(){
         }
 
     }
+
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         super.onActivityResult(requestCode, resultCode, data)
 
-        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE){
+        if (resultCode == Activity.RESULT_OK && requestCode == REQUEST_CODE) {
 
             // if multiple images are selected
             if (data?.clipData != null) {
@@ -142,18 +128,37 @@ class FragmentMain: Fragment(){
                 for (i in 0 until count!!) {
                     var imageUri: Uri = data.clipData?.getItemAt(i)!!.uri
 
-                    imageViewModel.addPhotoToDatabase(Photo(i.toLong(), imageUri.toString(), 100000, true,true))
-                    
-                    //     iv_image.setImageURI(imageUri) Here you can assign your Image URI to the ImageViews
+                    imageViewModel.addPhotoToDatabase(
+                        Photo(
+                            imageUri.toString(),
+                            100000,
+                            true,
+                            true
+                        )
+                    )
                 }
-
             } else if (data?.data != null) {
-                // if single image is selected
 
                 var imageUri: Uri? = data.data
-                //   iv_image.setImageURI(imageUri) Here you can assign the picked image uri to your imageview
-                imageViewModel.addPhotoToDatabase(Photo(111, imageUri.toString(), 100000, true,true))
+                imageViewModel.addPhotoToDatabase(Photo(imageUri.toString(), 100000, true, true))
             }
+        }
+    }
+
+    fun KlickOpen(photo: Photo) {
+
+        this.findNavController().navigate(FragmentMainDirections.toBigPhotoFragment())
+        setFragmentResult(TEST, Bundle().apply {
+            putString(KEY1, photo.url)
+        })
+    }
+
+    override fun onClik(photo: Photo) {
+
+        if (!mutList.contains(photo)) {
+            mutList.add(photo)
+        } else {
+            mutList.remove(photo)
         }
     }
 

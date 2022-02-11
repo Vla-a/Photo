@@ -9,7 +9,6 @@ import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.photo.databinding.FragmentBigphotoBinding
-import com.example.photo.databinding.FragmentMainBinding
 import com.example.photo.photo.FragmentMain.Companion.KEY1
 import com.example.photo.photo.FragmentMain.Companion.TEST
 

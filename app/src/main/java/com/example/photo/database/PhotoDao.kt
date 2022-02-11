@@ -13,6 +13,6 @@ interface PhotoDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
     fun addPhoto(photo: PhotoEntity)
 
-//    @Delete
-//    suspend fun deletePhoto(photo: PhotoEntity)
+    @Delete
+    fun deletePhoto(photo: PhotoEntity)
 }

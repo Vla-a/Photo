@@ -10,6 +10,6 @@ object Utility {
     ): Int {
         val displayMetrics: DisplayMetrics = context.resources.displayMetrics
         val screenWidthDp = displayMetrics.widthPixels / displayMetrics.density
-        return (screenWidthDp / columnWidthDp + 0.5).toInt()
+        return (screenWidthDp / columnWidthDp + 0.6).toInt()
     }
 }

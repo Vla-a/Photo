@@ -1,11 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-<style name = "AppTheme" parent = "Theme.MaterialComponents.Light.DarkActionBar">
+    <!-- Base application theme. -->
+    <style name="Theme.Fab_Bottom_app_bar" parent="Theme.MaterialComponents.DayNight.NoActionBar">
+        <item name="colorPrimary">#080908</item>
+        <item name="colorPrimaryVariant">#1D1E1D</item>
+        <item name="colorOnPrimary">#000</item>
+    </style>
 
-    <item name="colorPrimary">@color/white</item>
-    <item name="android:colorPrimaryDark">@color/white</item>
-    <item name="colorAccent">@color/white</item>
-
-</style>
 </resources>
