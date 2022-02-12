@@ -20,42 +20,12 @@ class CustomButtomView @JvmOverloads constructor(
     defStyleAttrs: Int = 0
 ) : View(context, attributeSet, defStyleAttrs) {
 
-    val star =
-        ContextCompat.getDrawable(context, R.drawable.ic_baseline_add_24)!!.toBitmap()
-    var imageCoords: Pair<Float, Float>? = null
     private val paint = Paint().apply {
         color = Color.BLACK
         style = Paint.Style.STROKE
         strokeWidth = 10f
     }
 
-    val recognizer = GestureDetectorCompat(context, object :
-        GestureDetector.SimpleOnGestureListener() {
-
-        override fun onDown(e: MotionEvent?): Boolean {
-            imageCoords = e!!.x to e.y
-            invalidate()
-            return true
-        }
-
-        override fun onScroll(
-            e1: MotionEvent?,
-            e2: MotionEvent?,
-            distanceX: Float,
-            distanceY: Float
-        ): Boolean {
-            imageCoords = e2!!.x to e2.y
-            invalidate()
-            return true
-        }
-    })
-
-    init {
-        setOnTouchListener { view, motionEvent ->
-
-            recognizer.onTouchEvent(motionEvent)
-        }
-    }
 
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
@@ -65,11 +35,11 @@ class CustomButtomView @JvmOverloads constructor(
 
         val radius = min(width, height) / 2 - 10
         canvas.drawCircle(width / 2f, height / 2f, radius.toFloat(), paint)
-        canvas.drawLine(640f, 80f, 440f,80f,paint)
-        canvas.drawLine(540f, -10f, 540f,180f,paint)
+        canvas.drawLine(width / 2f - 92f, height / 2f, width / 2 + 92f,height / 2f,paint)
+        canvas.drawLine(width / 2f, height / 2f - 92f, width / 2f,height / 2f + 92f,paint)
 
         paint.color = Color.WHITE
-        canvas.drawLine(590f, 80f, 540f,80f,paint)
-        canvas.drawLine(540f, 30f, 540f,85f,paint)
+        canvas.drawLine(width / 2f, height / 2f, width / 2 + 44f,height / 2f,paint)
+        canvas.drawLine(width / 2f, height / 2f - 44f, width / 2f,height / 2f + 5f,paint)
     }
 }

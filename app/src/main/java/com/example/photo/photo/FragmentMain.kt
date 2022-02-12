@@ -10,6 +10,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.core.view.isInvisible
+import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
@@ -29,6 +30,7 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
     private val mutList: MutableList<Photo> = mutableListOf()
     private var binding: FragmentMainBinding? = null
     val imageViewModel: ImageViewModel by viewModel()
+    var isVisibl = false
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -81,6 +83,8 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
         }
 
         binding!!.btnDelete.setOnClickListener {
+
+            imageViewModel.chengeList()
             binding!!.btnDelete.visibility = View.INVISIBLE
 
             mutList.forEach { photo ->
@@ -93,7 +97,6 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
     private fun longlickListener() {
         imageViewModel.chengeList()
         binding!!.btnDelete.isInvisible = !binding!!.btnDelete.isInvisible
-
     }
 
     private fun openGalleryForImages() {
@@ -147,10 +150,13 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
 
     fun KlickOpen(photo: Photo) {
 
-        this.findNavController().navigate(FragmentMainDirections.toBigPhotoFragment())
-        setFragmentResult(TEST, Bundle().apply {
-            putString(KEY1, photo.url)
-        })
+        if(!binding!!.btnDelete.isVisible){
+
+            this.findNavController().navigate(FragmentMainDirections.toBigPhotoFragment())
+            setFragmentResult(TEST, Bundle().apply {
+                putString(KEY1, photo.url)
+            })
+        }
     }
 
     override fun onClik(photo: Photo) {
