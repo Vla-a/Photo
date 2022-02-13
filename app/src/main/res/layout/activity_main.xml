@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".MainActivity">
+    tools:context=".ui.MainActivity">
 
     <androidx.fragment.app.FragmentContainerView
         android:id="@+id/c_fragmentCall"
@@ -41,7 +41,7 @@
 
     </com.google.android.material.bottomappbar.BottomAppBar>
 
-    <com.example.photo.CustomButtomView
+    <com.example.photo.ui.CustomButtomView
         android:id="@+id/btn_customView"
         android:layout_width="wrap_content"
         android:layout_height="60dp"

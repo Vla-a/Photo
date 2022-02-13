@@ -3,4 +3,8 @@
     <string name="Street">Улица</string>
     <string name="Location">Локация</string>
     <string name="Delete">Удалить</string>
+    <string name="Removal">Удаление</string>
+    <string name="Yes">Yes</string>
+    <string name="No">No</string>
+    <string name="Ask">Вы действительно хотите удалить фото?</string>
 </resources>

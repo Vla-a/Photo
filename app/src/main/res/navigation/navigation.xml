@@ -7,7 +7,7 @@
 
     <fragment
         android:id="@+id/mainFragment"
-        android:name="com.example.photo.photo.FragmentMain"
+        android:name="com.example.photo.ui.photo.FragmentMain"
         android:label="MainFragment"
         tools:layout="@layout/fragment_main">
         <action
@@ -22,7 +22,7 @@
 
     <fragment
         android:id="@+id/bigPhotoFragment"
-        android:name="com.example.photo.bigFoto.FragmentBigPhoto"
+        android:name="com.example.photo.ui.bigPhoto.FragmentBigPhoto"
         android:label="MapFragment"
         tools:layout="@layout/fragment_bigphoto">
     </fragment>

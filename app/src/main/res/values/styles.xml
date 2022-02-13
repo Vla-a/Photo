@@ -8,4 +8,10 @@
         <item name="colorOnPrimary">#000</item>
     </style>
 
+    <style name="ButtonLight_pink" parent="android:Widget.Button">
+        <item name="android:background">@color/MyCollor</item>
+        <item name="android:minHeight">48dip</item>
+        <item name="android:minWidth">64dip</item>
+        <item name="android:textColor">@color/black</item>
+    </style>
 </resources>

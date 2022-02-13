@@ -1,16 +1,18 @@
-package com.example.photo.bigFoto
+package com.example.photo.ui.bigPhoto
 
+import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
 import com.bumptech.glide.Glide
 import com.example.photo.databinding.FragmentBigphotoBinding
-import com.example.photo.photo.FragmentMain.Companion.KEY1
-import com.example.photo.photo.FragmentMain.Companion.TEST
+import com.example.photo.ui.photo.FragmentMain.Companion.KEY1
+import com.example.photo.ui.photo.FragmentMain.Companion.TEST
 
 class FragmentBigPhoto : Fragment() {
 
@@ -30,7 +32,7 @@ class FragmentBigPhoto : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding!!.btnReturn.setOnClickListener {
-            it.findNavController().popBackStack()
+           it.findNavController().popBackStack()
         }
 
         setFragmentResultListener(TEST) { key, bundle ->

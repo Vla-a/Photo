@@ -1,4 +1,4 @@
-package com.example.photo.photo
+package com.example.photo.ui.photo
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

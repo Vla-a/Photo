@@ -1,16 +1,11 @@
-package com.example.photo
+package com.example.photo.ui
 
 import android.content.Context
 import android.graphics.Canvas
 import android.graphics.Color
 import android.graphics.Paint
 import android.util.AttributeSet
-import android.view.GestureDetector
-import android.view.MotionEvent
 import android.view.View
-import androidx.core.content.ContextCompat
-import androidx.core.graphics.drawable.toBitmap
-import androidx.core.view.GestureDetectorCompat
 import kotlin.math.min
 
 

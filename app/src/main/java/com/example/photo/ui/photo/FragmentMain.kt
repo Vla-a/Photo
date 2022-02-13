@@ -1,7 +1,8 @@
-package com.example.photo.photo
+package com.example.photo.ui.photo
 
 
 import android.app.Activity
+import android.app.AlertDialog
 import android.content.Intent
 import android.net.Uri
 import android.os.Build
@@ -9,11 +10,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.LinearLayout
 import androidx.core.view.isInvisible
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
+import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photo.R
@@ -83,14 +86,7 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
         }
 
         binding!!.btnDelete.setOnClickListener {
-
-            imageViewModel.chengeList()
-            binding!!.btnDelete.visibility = View.INVISIBLE
-
-            mutList.forEach { photo ->
-                imageViewModel.deletePhoto(photo)
-            }
-            mutList.clear()
+            withButtonCentered()
         }
     }
 
@@ -166,6 +162,38 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
         } else {
             mutList.remove(photo)
         }
+    }
+
+    fun withButtonCentered() {
+
+        val alertDialog = AlertDialog.Builder(context).create()
+        alertDialog.setTitle(R.string.Removal)
+        alertDialog.setMessage("Вы действительно хотите удалить фото?")
+
+        alertDialog.setButton(
+            AlertDialog.BUTTON_POSITIVE, "Yes"
+        ) { dialog, which ->
+            imageViewModel.chengeList()
+            binding!!.btnDelete.visibility = View.INVISIBLE
+
+            mutList.forEach { photo ->
+                imageViewModel.deletePhoto(photo)
+            }
+            mutList.clear()
+        }
+
+        alertDialog.setButton(
+            AlertDialog.BUTTON_NEGATIVE, "No"
+        ) { dialog, which -> dialog.dismiss() }
+        alertDialog.show()
+
+        val btnPositive = alertDialog.getButton(AlertDialog.BUTTON_POSITIVE)
+        val btnNegative = alertDialog.getButton(AlertDialog.BUTTON_NEGATIVE)
+
+        val layoutParams = btnPositive.layoutParams as LinearLayout.LayoutParams
+        layoutParams.weight = 10f
+        btnPositive.layoutParams = layoutParams
+        btnNegative.layoutParams = layoutParams
     }
 
     companion object {

@@ -1,9 +1,9 @@
-package com.example.photo
+package com.example.photo.ui
 
 import android.app.Application
 import com.example.photo.database.DatabaseConstructor
 import com.example.photo.database.PhotoDatabase
-import com.example.photo.photo.ImageViewModel
+import com.example.photo.ui.photo.ImageViewModel
 import com.example.photo.repositories.PhotoRepository
 import org.koin.android.ext.koin.androidContext
 import org.koin.androidx.viewmodel.dsl.viewModel
