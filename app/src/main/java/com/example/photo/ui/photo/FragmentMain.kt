@@ -16,7 +16,6 @@ import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResult
 import androidx.lifecycle.lifecycleScope
-import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
 import com.example.photo.R
@@ -61,8 +60,6 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
             binding!!.tvTex.text = binding!!.editText.text.toString()
             binding!!.editText.setText(R.string.Street)
         }
-
-
 
         with(binding?.rvPhoto) {
             this?.layoutManager = context?.let { Utility.calculateNoOfColumns(it, 120f) }?.let {
@@ -112,7 +109,6 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
             intent.type = "image/*"
             startActivityForResult(intent, REQUEST_CODE);
         }
-
     }
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
@@ -146,7 +142,7 @@ class FragmentMain : Fragment(), PhotoAdapter.OnAdapter {
 
     fun KlickOpen(photo: Photo) {
 
-        if(!binding!!.btnDelete.isVisible){
+        if (!binding!!.btnDelete.isVisible) {
 
             this.findNavController().navigate(FragmentMainDirections.toBigPhotoFragment())
             setFragmentResult(TEST, Bundle().apply {

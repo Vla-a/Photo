@@ -6,7 +6,6 @@ import androidx.room.PrimaryKey
 
 @Entity(tableName = "photo_table")
 class PhotoEntity(
-
     @PrimaryKey val url: String,
     val date: Long,
     val circle: Boolean,

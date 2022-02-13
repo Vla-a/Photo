@@ -19,7 +19,6 @@ class PhotoAdapter(
 
 ) : ListAdapter<Photo, PhotoAdapter.PhotoViewHolder>(DiffUtilItemCallback()) {
 
-
     override fun onCreateViewHolder(
         parent: ViewGroup,
         viewType: Int
@@ -84,6 +83,4 @@ class DiffUtilItemCallback : DiffUtil.ItemCallback<Photo>() {
     override fun areContentsTheSame(oldItem: Photo, newItem: Photo): Boolean {
         return oldItem.url == newItem.url
     }
-
-
 }

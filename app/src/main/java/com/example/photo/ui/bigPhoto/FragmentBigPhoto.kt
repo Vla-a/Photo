@@ -1,11 +1,9 @@
 package com.example.photo.ui.bigPhoto
 
-import android.app.AlertDialog
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.LinearLayout
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.setFragmentResultListener
 import androidx.navigation.findNavController
@@ -32,7 +30,7 @@ class FragmentBigPhoto : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding!!.btnReturn.setOnClickListener {
-           it.findNavController().popBackStack()
+            it.findNavController().popBackStack()
         }
 
         setFragmentResultListener(TEST) { key, bundle ->
@@ -42,7 +40,6 @@ class FragmentBigPhoto : Fragment() {
                     Glide
                         .with(it)
                         .load(uri)
-//                        .override(20,20)
                         .into(it1.imagePhoto)
                 }
             }

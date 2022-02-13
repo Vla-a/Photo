@@ -21,7 +21,6 @@ class CustomButtomView @JvmOverloads constructor(
         strokeWidth = 10f
     }
 
-
     override fun onDraw(canvas: Canvas) {
         super.onDraw(canvas)
 
@@ -30,11 +29,11 @@ class CustomButtomView @JvmOverloads constructor(
 
         val radius = min(width, height) / 2 - 10
         canvas.drawCircle(width / 2f, height / 2f, radius.toFloat(), paint)
-        canvas.drawLine(width / 2f - 92f, height / 2f, width / 2 + 92f,height / 2f,paint)
-        canvas.drawLine(width / 2f, height / 2f - 92f, width / 2f,height / 2f + 92f,paint)
+        canvas.drawLine(width / 2f - 92f, height / 2f, width / 2 + 92f, height / 2f, paint)
+        canvas.drawLine(width / 2f, height / 2f - 92f, width / 2f, height / 2f + 92f, paint)
 
         paint.color = Color.WHITE
-        canvas.drawLine(width / 2f, height / 2f, width / 2 + 44f,height / 2f,paint)
-        canvas.drawLine(width / 2f, height / 2f - 44f, width / 2f,height / 2f + 5f,paint)
+        canvas.drawLine(width / 2f, height / 2f, width / 2 + 44f, height / 2f, paint)
+        canvas.drawLine(width / 2f, height / 2f - 44f, width / 2f, height / 2f + 5f, paint)
     }
 }
